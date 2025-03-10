@@ -3,6 +3,7 @@ const amount = document.getElementById('amount');
 const currency = document.getElementById('currency');
 const footer = document.querySelector('main footer');
 const description = document.getElementById('description');
+const result = document.getElementById('result');
 
 amount.addEventListener('input', () => {
   const hasCharactersRegex = /\D+/g
@@ -30,7 +31,14 @@ function convertCurrency(amount, price, symbol,) {
   try {
     description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`
 
+    let total = amount * price
 
+    if (isNaN(total)) {
+      throw new Error("Valor inválido")
+    }
+
+    total = formatCurrencyBRL(total).replace("R$", "")
+    result.textContent = `${total} Reais`
 
     footer.classList.add('show-result')
   } catch (error) {
